@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #f0f0f0; /* Updated background color */
+            font-family: Arial, sans-serif; /* Improved font */
+        }
+        .full-height {
+            min-height: 100vh; /* Changed to min-height for better responsiveness */
+        }
+        .header {
+            background-color: #2c3e50; /* Darker header color */
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Stylish font */
+            letter-spacing: 2px; /* Increased letter spacing */
+            font-size: 24px; /* Larger font size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header img {
+            height: 40px; /* Adjust the height of the logo */
+            margin-right: 10px; /* Add some spacing between logo and text */
+        }
+        .chat-container {
+            height: calc(100% - 80px); /* Adjusted based on header height */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px; /* Increased max width for chat box */
+            height: 80vh; /* Increased height for chat box */
+            display: flex;
+            flex-direction: column; /* Allow stacking of elements */
+        }
+
+        .chat-log {
+            overflow-y: auto;
+            flex: 1; /* Make chat-log take available space */
+            max-height: calc(80vh - 80px); /* Adjusted height to fit screen */
+            padding: 10px;
+        }
+        .chat-message {
+            margin-bottom: 10px; /* Added margin between messages */
+            overflow: hidden; /* Hidden overflow for cleaner layout */
+        }
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 20px; /* Adjusted margin for better spacing */
+        }
+        .user-message .message-bubble {
+            background-color: #003A5B; /* User message bubble color 007bff */
+            color: #ffffff; /* Text color */
+            border-radius: 10px;
+            padding: 10px 15px;
+            max-width: 70%; /* Limited max width for user messages */
+            word-wrap: break-word; /* Wrap long words */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+            position: relative;
+        }
+        .bot-message {
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 20px; /* Adjusted margin for better spacing */
+        }
+        .bot-message .message-bubble {
+            background-color: #E5763D;
+            color: #ffffff; /* Text color */
+            border-radius: 10px;
+            padding: 10px 15px;
+            max-width: 70%; /* Limited max width for bot messages */
+            word-wrap: break-word; /* Wrap long words */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
+            position: relative;
+        }
+        .chat-input-area {
+            padding: 10px;
+            background-color: #f9f9f9; /* Lighter input area color */
+            border-top: 1px solid #eeeeee; /* Added border to separate input area */
+        }
+        .chat-input {
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            width: calc(100% - 80px); /* Adjusted input width */
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .btn-send {
+            width: 80px; /* Fixed send button width */
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #2c3e50; /* Darker button color */
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+        .btn-send:hover {
+            background-color: #34495e; /* Darker hover color */
+        }
+        .message-indicator {
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: -20px;
+            left: 15px;
+        }
+        .user-message .message-indicator {
+            color: #003A5B;
+        }
+        .bot-message .message-indicator {
+            color: #E5763D;
+        }
+        .chat-message img {
+            max-width: 100%; /* Ensure image does not exceed the width of the container */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 10px; /* Rounded corners */
+            margin-top: 5px; /* Spacing from other elements */
+            display: block; /* Ensures proper spacing */
+            margin-left: auto; /* Center the image */
+            margin-right: auto; /* Center the image */
+        }
+    </style>
+</head>
+<body>
+<div class="full-height">
+    <div class="header">
+        <!--<img src="C:/Users/ankee/OneDrive/Desktop/Chatbot/Chatbot_app/templates/bot-png.png" alt="Logo">--> <!-- Replace "your-logo.png" with the path to your logo -->
+        <h2 style="margin-bottom: 0;">Fedway Sales Bot POC</h2>
+    </div>
+    <div class="container chat-container">
+        <div class="chat-box">
+            <div class="chat-log">
+                <!-- Initial greeting message -->
+                <div class="chat-message bot-message">
+                    <div class="message-bubble">
+                        <div class="message-indicator">Bot</div>
+                        Hello! I am the Fedway Assistant. I can help you find product images. Please ask me about any product and I will display the images for you
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="messageInput" class="form-control chat-input" placeholder="Type your message here...">
+                <button onclick="sendMessage()" class="btn btn-send">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Function to send message
+    function sendMessage() {
+        var message = document.getElementById('messageInput').value;
+        sendMessageToBot(message);
+    }
+
+    // Function to handle Enter key press
+    document.getElementById('messageInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Function to send message to bot
+    function sendMessageToBot(message) {
+        var chatLog = document.querySelector('.chat-log');
+
+        // Immediately append user message
+        chatLog.innerHTML += `
+            <div class="chat-message user-message">
+                <div class="message-bubble">
+                    <div class="message-indicator">You</div>${message}
+                </div>
+            </div>`;
+
+        // Clear input field immediately
+        document.getElementById('messageInput').value = '';
+
+        // Scroll to the bottom to show the latest message
+        chatLog.scrollTop = chatLog.scrollHeight;
+
+        // Send the message to the bot
+        fetch('/ask', {
+            method: 'POST',
+            body: new URLSearchParams('message=' + message),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Append bot message
+            if (data.message) {
+                chatLog.innerHTML += `
+                    <div class="chat-message bot-message">
+                        <div class="message-bubble">
+                            <div class="message-indicator">Bot</div>${data.message}
+                        </div>
+                    </div>`;
+            }
+
+            // Append images if present
+            if (data.images && data.images.length > 0) {
+                // Create a container for images
+                let imageContainer = `<div class="image-container" style="display: flex; justify-content: space-between; margin-top: 5px;">`;
+
+                // Loop through images and add to the container
+                data.images.forEach(image => {
+                    imageContainer += `
+                        <img src="${image}" alt="Image" style="max-width: 30%; height: auto; border-radius: 10px;">`;
+                });
+                imageContainer += `</div>`; // Close the image container
+
+                chatLog.innerHTML += `
+                    <div class="chat-message bot-message">
+                        ${imageContainer}
+                    </div>`;
+            }
+
+            // Scroll to the bottom to show the latest bot message
+            chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+</script>
+</body>
+</html>
