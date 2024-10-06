@@ -1,8 +1,6 @@
 import os
-import dotenv
 import requests
 from flask import Flask, render_template, request, jsonify
-from PIL import Image
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
@@ -12,7 +10,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain_aws import BedrockLLM
 
 # Load environment variables
-dotenv.load_dotenv()
 
 # Azure Search configuration
 AZURE_SEARCH_ENDPOINT = "https://visionrag.search.windows.net"
