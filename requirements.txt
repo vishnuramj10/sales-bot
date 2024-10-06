@@ -204,6 +204,7 @@ gradio_client==1.1.1
 graphviz==0.20.1
 greenlet @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_dd2bsq3kkw/croot/greenlet_1670513229760/work
 grpcio==1.59.2
+gunicorn==23.0.0
 h11==0.14.0
 h5py @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_a4au6npi7q/croot/h5py_1691589712522/work
 HeapDict @ file:///Users/ktietz/demo/mc3/conda-bld/heapdict_1630598515714/work
