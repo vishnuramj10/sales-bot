@@ -224,12 +224,13 @@
             // Append images if present
             if (data.images && data.images.length > 0) {
                 // Create a container for images
-                let imageContainer = `<div class="image-container" style="display: flex; justify-content: space-between; margin-top: 5px;">`;
+                let imageContainer = `<div class="image-container" style="display: flex; overflow-x: auto; margin-top: 5px;">`;
 
                 // Loop through images and add to the container
                 data.images.forEach(image => {
                     imageContainer += `
-                        <img src="${image}" alt="Image" style="max-width: 30%; height: auto; border-radius: 10px;">`;
+                        <img src="${image.path}" alt="Image" style="width: 300px; height: 300px; border-radius: 10px; margin-right: 10px;">`; // Fixed size for each image
+                    console.log(`Image: ${image.path}, Similarity Score: ${image.score}`);
                 });
                 imageContainer += `</div>`; // Close the image container
 
@@ -237,7 +238,7 @@
                     <div class="chat-message bot-message">
                         ${imageContainer}
                     </div>`;
-            }
+}
 
             // Scroll to the bottom to show the latest bot message
             chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
