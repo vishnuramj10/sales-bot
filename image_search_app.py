@@ -25,7 +25,7 @@ THRESHOLD = 0.243  # Define the similarity threshold
 DIFFERENCE_THRESHOLD = 0.03
 
 def get_model_params():
-    return {"api-version": "2023-02-01-preview", "modelVersion": "latest"}
+    return {"api-version": "2024-02-01", "model-version": "2022-04-11"}
 
 def get_auth_headers():
     return {"Ocp-Apim-Subscription-Key": AZURE_COMPUTER_VISION_KEY}
